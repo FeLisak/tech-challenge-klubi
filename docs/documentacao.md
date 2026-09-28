@@ -156,11 +156,44 @@ Os cuidados de segurança se concentram na IA, porque é onde estão o risco fin
 
 ## Onde Roda
 
-Next.js com TypeScript e Tailwind, publicado na Vercel. O `cars.json` vai junto no build. As únicas variáveis de ambiente são as do provedor de IA, `AI_API_URL`, `AI_API_KEY` e `AI_MODEL`, mais uma `AI_REQUEST_OPTIONS` para opções específicas do provedor, e todas são opcionais. O repositório traz um `.env.example` com as três; para rodar, basta copiá-lo para `.env` e preencher.
+Next.js com TypeScript e Tailwind, rodando em qualquer servidor com Node.js 22.18 ou mais recente. O código não usa nenhum recurso exclusivo de plataforma, e o `cars.json` vai junto no build, então não há banco nem serviço externo obrigatório. O mesmo `npm run build` seguido de `npm start` funciona na Vercel, em outros serviços de hospedagem, numa máquina virtual ou num contêiner. A Vercel foi a escolha de deploy pela integração direta com o GitHub, mas trocar de hospedagem não exige mudar uma linha de código, o que evita ficar preso a um fornecedor.
+
+A única exigência é um servidor Node, e não um site estático: a página lê a busca a cada requisição, e a chave da IA precisa ficar no servidor, longe do navegador.
+
+As únicas variáveis de ambiente são as do provedor de IA, `AI_API_URL`, `AI_API_KEY` e `AI_MODEL`, mais uma `AI_REQUEST_OPTIONS` para opções específicas do provedor, e todas são opcionais.
 
 O parser e a ordenação dos resultados têm testes que cobrem os três casos de teste, porque é ali que o desafio é decidido.
 
 O código fica separado por responsabilidade: a base, o parser, a ordenação, a chamada à IA e a interface, cada um no seu arquivo. Os commits seguem o Conventional Commits, com uma mudança por commit. Quem assumir o projeto depois entende o histórico sem precisar perguntar.
+
+## Como Rodar
+
+É preciso ter Node.js 22.18 ou mais recente.
+
+```bash
+npm install
+cp .env.example .env   # opcional: só para ligar a IA
+npm run dev            # http://localhost:3000
+```
+
+Para ligar a IA, preencha no `.env`:
+
+| Variável | O que colocar | Obrigatória para a IA |
+|---|---|---|
+| `AI_API_URL` | O endpoint completo de chat do provedor, terminando em `/chat/completions`. A raiz do provedor não funciona. | Sim |
+| `AI_API_KEY` | A chave de API do provedor. | Sim |
+| `AI_MODEL` | O nome do modelo, exatamente como o provedor lista em `/models`. | Sim |
+| `AI_REQUEST_OPTIONS` | Um JSON somado a cada requisição, para opções do provedor. Em modelos que raciocinam antes de responder, desligar o raciocínio deixa a busca mais rápida e mais barata. | Não |
+
+Faltando qualquer uma das três obrigatórias, a IA fica desligada e a busca segue só com o parser. Em produção, as mesmas variáveis vão no painel de variáveis de ambiente da hospedagem, porque o `.env` não vai para o repositório.
+
+Outros comandos:
+
+```bash
+npm test                     # testes do parser, da ordenação e da IA
+npm run lint                 # ESLint
+npm run build && npm start   # versão de produção
+```
 
 ## Detalhes Que Vendem o Carro
 
@@ -279,6 +312,10 @@ Entre os exemplos abaixo da busca, dois são buscas vagas, "algo econômico pra 
 No teste com o provedor real, o primeiro modelo configurado raciocinava antes de responder. O raciocínio consumia o limite de tokens, e a resposta chegava vazia depois de seis segundos. Aumentar o limite só deixaria cada busca mais lenta e mais cara. A saída foi a variável opcional `AI_REQUEST_OPTIONS`, um JSON somado à requisição, que no nosso caso desliga o raciocínio. O código continua sem depender de um provedor, e a resposta caiu para cerca de um segundo.
 
 O prompt também ganhou uma tradução curta das intenções mais comuns: "econômico" puxa os mais baratos, "família" e "viagem" apontam para sedã ou SUV, "cidade" aponta para hatch. Nos testes, "algo econômico pra família" virou SUV, com o mais barato primeiro; "quero um carro que não gaste gasolina" virou elétrico; e um texto pedindo para ignorar as instruções não virou filtro nenhum.
+
+### 2026-09-28: Portabilidade e configuração
+
+O primeiro teste com o provedor real falhou por um detalhe de configuração: a URL apontava para a raiz do provedor, e não para o endpoint de chat. Se aconteceu aqui, aconteceria com quem fosse rodar o projeto. Por isso o `.env.example` passou a explicar o formato de cada variável, e a documentação ganhou a seção Como Rodar. O `package.json` agora declara a versão mínima do Node, e a seção Onde Roda deixa claro que a aplicação roda em qualquer servidor Node, com a Vercel como escolha de deploy e não como dependência.
 
 ### Próximas Etapas
 
