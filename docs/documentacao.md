@@ -156,7 +156,7 @@ Os cuidados de segurança se concentram na IA, porque é onde estão o risco fin
 
 ## Onde Roda
 
-Next.js com TypeScript e Tailwind, publicado na Vercel. O `cars.json` vai junto no build. As únicas variáveis de ambiente são as do provedor de IA, `AI_API_URL`, `AI_API_KEY` e `AI_MODEL`, e elas são opcionais. O repositório traz um `.env.example` com as três; para rodar, basta copiá-lo para `.env` e preencher.
+Next.js com TypeScript e Tailwind, publicado na Vercel. O `cars.json` vai junto no build. As únicas variáveis de ambiente são as do provedor de IA, `AI_API_URL`, `AI_API_KEY` e `AI_MODEL`, mais uma `AI_REQUEST_OPTIONS` para opções específicas do provedor, e todas são opcionais. O repositório traz um `.env.example` com as três; para rodar, basta copiá-lo para `.env` e preencher.
 
 O parser e a ordenação dos resultados têm testes que cobrem os três casos de teste, porque é ali que o desafio é decidido.
 
@@ -200,7 +200,7 @@ Algumas ideias trariam resultado para o negócio, mas dependem de coisas que um 
 | Caso 1: o carro existe | Os Três Casos de Teste | ✅ |
 | Caso 2: valor abaixo do disponível | Os Três Casos de Teste | ✅ |
 | Caso 3: outra localidade | Os Três Casos de Teste | ✅ |
-| Diferencial: IA | A IA | ⏳ |
+| Diferencial: IA | A IA | ✅ |
 | Diferencial: deploy na nuvem | Onde Roda | ⏳ |
 | Diferencial: design e usabilidade | A Tela, Detalhes Que Vendem o Carro | ⏳ |
 | Diferencial: organização de código e commits | Onde Roda | ⏳ |
@@ -270,11 +270,15 @@ O visual segue uma linha monocromática e sóbria, com cor reservada para as eti
 
 ### 2026-09-28: Integração com a IA
 
-A chamada à IA ficou em `lib/ai.ts`, separada do parser e da tela. Ela recebe o texto e um resumo do catálogo, e devolve só filtros em JSON, com temperatura 0, no máximo 150 tokens e 4 segundos de limite. Qualquer falha, seja falta de chave, falta de saldo, lentidão ou resposta fora do formato, devolve nenhum filtro, e a busca segue com o parser. A vitrine nunca depende do fornecedor.
+A chamada à IA ficou em `lib/ai.ts`, separada do parser e da tela. Ela recebe o texto e um resumo do catálogo, e devolve só filtros em JSON, com temperatura 0, no máximo 300 tokens e 4 segundos de limite. Qualquer falha, seja falta de chave, falta de saldo, lentidão ou resposta fora do formato, devolve nenhum filtro, e a busca segue com o parser. A vitrine nunca depende do fornecedor.
 
 A resposta passa por uma conferência antes de virar filtro: cada valor precisa existir na base. Um modelo inventado, uma cidade fora do catálogo ou um texto qualquer no lugar do preço são descartados, e isso tem teste. O que a IA contribui aparece marcado como "Interpretado por IA", junto com um convite para ajustar.
 
 Entre os exemplos abaixo da busca, dois são buscas vagas, "algo econômico pra família" e "carro espaçoso pra viajar", que caem justamente no caminho da IA. E quando nem o parser nem a IA reconhecem nada, a tela diz isso e sugere usar o nome do carro ou os filtros, em vez de mostrar uma lista sem explicação.
+
+No teste com o provedor real, o primeiro modelo configurado raciocinava antes de responder. O raciocínio consumia o limite de tokens, e a resposta chegava vazia depois de seis segundos. Aumentar o limite só deixaria cada busca mais lenta e mais cara. A saída foi a variável opcional `AI_REQUEST_OPTIONS`, um JSON somado à requisição, que no nosso caso desliga o raciocínio. O código continua sem depender de um provedor, e a resposta caiu para cerca de um segundo.
+
+O prompt também ganhou uma tradução curta das intenções mais comuns: "econômico" puxa os mais baratos, "família" e "viagem" apontam para sedã ou SUV, "cidade" aponta para hatch. Nos testes, "algo econômico pra família" virou SUV, com o mais barato primeiro; "quero um carro que não gaste gasolina" virou elétrico; e um texto pedindo para ignorar as instruções não virou filtro nenhum.
 
 ### Próximas Etapas
 
