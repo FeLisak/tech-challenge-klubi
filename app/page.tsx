@@ -1,6 +1,7 @@
 import { brl, CarCard } from "./components/car-card";
 import { FilterBar } from "./components/filter-bar";
 import { SearchBar } from "./components/search-bar";
+import { interpret, needsAI } from "@/lib/ai";
 import { cars } from "@/lib/cars";
 import { first, readFilters } from "@/lib/parse";
 import { rank, type Match } from "@/lib/rank";
@@ -34,7 +35,15 @@ function headline({ car, overBudget, inCity }: Match): { title: string; detail: 
 export default async function Home({ searchParams }: PageProps<"/">) {
   const params = await searchParams;
   const query = first(params.q).slice(0, 120);
-  const filters = readFilters(params, cars);
+  let filters = readFilters(params, cars);
+  // Filtros ajustados à mão já dizem o que a pessoa quer; a IA só interpreta o texto livre.
+  const adjusted = ["modelo", "cidade", "categoria", "max"].some((key) => key in params);
+  let byAI = false;
+  if (!adjusted && needsAI(query, filters)) {
+    const suggested = await interpret(query, cars);
+    byAI = Object.keys(suggested).length > 0;
+    filters = { ...suggested, ...filters };
+  }
   const { requested, alternatives } = rank(cars, filters);
   const searched = Object.keys(filters).length > 0;
   const show = { budget: filters.maxPrice !== undefined, city: filters.city !== undefined };
@@ -56,6 +65,14 @@ export default async function Home({ searchParams }: PageProps<"/">) {
         </header>
 
         <section aria-label="Filtros" className="border-y border-line py-5">
+          {byAI && (
+            <p className="mb-4 flex flex-wrap items-center gap-2 text-sm text-muted">
+              <span className="rounded-full bg-blue-bg px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wider text-blue-fg">
+                Interpretado por IA
+              </span>
+              Estes filtros saíram da sua busca. Ajuste se não for bem isso.
+            </p>
+          )}
           <FilterBar
             key={JSON.stringify(filters)}
             query={query}
@@ -83,6 +100,11 @@ export default async function Home({ searchParams }: PageProps<"/">) {
           <h2 id="alternatives" className="text-xs font-medium uppercase tracking-wider text-muted">
             {main ? `Parecidos com o ${requested[0].car.Model}` : searched ? "Os melhores para a sua busca" : "Todos os carros"}
           </h2>
+          {query && !searched && (
+            <p className="mt-2 text-muted">
+              Não reconhecemos um modelo, cidade ou preço em “{query}”. Tente o nome do carro ou use os filtros acima.
+            </p>
+          )}
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {alternatives.map((match, index) => (
               <CarCard key={match.car.Model} match={match} index={index} {...show} alternative={Boolean(main)} />

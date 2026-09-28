@@ -140,7 +140,7 @@ Uma página só: a busca no topo, os filtros logo abaixo e os resultados em card
 
 ## A IA
 
-A IA só é chamada quando o parser não entende nada da busca. Ela recebe o texto e a lista de valores que existem na base, e devolve apenas filtros em JSON: modelo, cidade, categoria, combustível e preço máximo. O servidor descarta qualquer valor que não esteja na base, então uma resposta errada vira, no pior caso, um filtro que a pessoa corrige.
+A IA só é chamada quando o parser não descobre que carro a pessoa quer: nenhum modelo, marca, categoria ou combustível no texto, e pelo menos duas palavras. Se a pessoa já ajustou os filtros à mão, a IA também fica de fora, porque ela já disse o que quer. Ela recebe o texto e a lista de valores que existem na base, e devolve apenas filtros em JSON: modelo, cidade, categoria, combustível e preço máximo. O servidor descarta qualquer valor que não esteja na base, então uma resposta errada vira, no pior caso, um filtro que a pessoa corrige.
 
 A chamada tem temperatura 0 e um limite de alguns segundos. Se o provedor de IA falhar, demorar ou não estiver configurado, a busca segue só com o parser. Uma falha do fornecedor não derruba a vitrine.
 
@@ -156,7 +156,7 @@ Os cuidados de segurança se concentram na IA, porque é onde estão o risco fin
 
 ## Onde Roda
 
-Next.js com TypeScript e Tailwind, publicado na Vercel. O `cars.json` vai junto no build. As únicas variáveis de ambiente são as do provedor de IA, `AI_API_URL`, `AI_API_KEY` e `AI_MODEL`, e elas são opcionais.
+Next.js com TypeScript e Tailwind, publicado na Vercel. O `cars.json` vai junto no build. As únicas variáveis de ambiente são as do provedor de IA, `AI_API_URL`, `AI_API_KEY` e `AI_MODEL`, e elas são opcionais. O repositório traz um `.env.example` com as três; para rodar, basta copiá-lo para `.env` e preencher.
 
 O parser e a ordenação dos resultados têm testes que cobrem os três casos de teste, porque é ali que o desafio é decidido.
 
@@ -268,8 +268,15 @@ Cada caso de teste tem a sua mensagem no topo dos resultados, e o carro pedido a
 
 O visual segue uma linha monocromática e sóbria, com cor reservada para as etiquetas, porque num anúncio de carro quem precisa aparecer é o carro. A tela foi conferida no desktop e no celular.
 
+### 2026-09-28: Integração com a IA
+
+A chamada à IA ficou em `lib/ai.ts`, separada do parser e da tela. Ela recebe o texto e um resumo do catálogo, e devolve só filtros em JSON, com temperatura 0, no máximo 150 tokens e 4 segundos de limite. Qualquer falha, seja falta de chave, falta de saldo, lentidão ou resposta fora do formato, devolve nenhum filtro, e a busca segue com o parser. A vitrine nunca depende do fornecedor.
+
+A resposta passa por uma conferência antes de virar filtro: cada valor precisa existir na base. Um modelo inventado, uma cidade fora do catálogo ou um texto qualquer no lugar do preço são descartados, e isso tem teste. O que a IA contribui aparece marcado como "Interpretado por IA", junto com um convite para ajustar.
+
+Entre os exemplos abaixo da busca, dois são buscas vagas, "algo econômico pra família" e "carro espaçoso pra viajar", que caem justamente no caminho da IA. E quando nem o parser nem a IA reconhecem nada, a tela diz isso e sugere usar o nome do carro ou os filtros, em vez de mostrar uma lista sem explicação.
+
 ### Próximas Etapas
 
-1. Integração com a IA e sugestões clicáveis
-2. Deploy na Vercel
-3. README final com o link do deploy, decisões e Plano de Negócios
+1. Deploy na Vercel
+2. README final com o link do deploy, decisões e Plano de Negócios

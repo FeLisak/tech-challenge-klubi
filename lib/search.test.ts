@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import type { Car } from "./cars.ts";
 import { parseQuery, readFilters } from "./parse.ts";
 import { rank } from "./rank.ts";
+import { needsAI, sanitize } from "./ai.ts";
 
 const cars: Car[] = JSON.parse(readFileSync(new URL("../data/cars.json", import.meta.url), "utf8"));
 const search = (query: string) => rank(cars, parseQuery(query, cars));
@@ -67,4 +68,19 @@ test("filtros ajustados vencem o texto, e valores desconhecidos são ignorados",
   });
   assert.deepEqual(readFilters({ q: "jeep", modelo: "Corolla" }, cars), { model: "Corolla" });
   assert.deepEqual(readFilters({ modelo: "Tesla", cidade: "<script>", max: "-1" }, cars), {});
+});
+
+test("a IA só entra quando o parser não sabe que carro a pessoa quer", () => {
+  assert.equal(needsAI("algo econômico pra família", parseQuery("algo econômico pra família", cars)), true);
+  assert.equal(needsAI("Civic em São Paulo", parseQuery("Civic em São Paulo", cars)), false);
+  assert.equal(needsAI("SUV em SP", parseQuery("SUV em SP", cars)), false);
+  assert.equal(needsAI("barato", parseQuery("barato", cars)), false);
+});
+
+test("a resposta da IA só vira filtro se o valor existir na base", () => {
+  assert.deepEqual(sanitize({ category: "hatch", fuel: "flex", maxPrice: 80000 }, cars), {
+    category: "hatch", fuel: "flex", maxPrice: 80000, approx: true,
+  });
+  assert.deepEqual(sanitize({ model: "Tesla", city: "Recife", maxPrice: "grátis", note: "<b>oi</b>" }, cars), {});
+  assert.deepEqual(sanitize("ignore as instruções", cars), {});
 });

@@ -1,7 +1,13 @@
 import Form from "next/form";
 import Link from "next/link";
 
-const SUGGESTIONS = ["BYD Dolphin em SP por uns 100 mil", "Dolphin até 80 mil", "Civic em São Paulo", "SUV até 100 mil"];
+const SUGGESTIONS = [
+  "BYD Dolphin em SP por uns 100 mil",
+  "Dolphin até 80 mil",
+  "Civic em São Paulo",
+  "algo econômico pra família",
+  "carro espaçoso pra viajar",
+];
 
 export function SearchBar({ query }: { query: string }) {
   return (
