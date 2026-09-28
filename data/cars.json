@@ -2,71 +2,91 @@
   {
     "Name": "BYD",
     "Model": "Dolphin",
-    "Image": "exemplo.png",
+    "Image": "/cars/byd-dolphin.jpg",
     "Price": 99990,
-    "Location": "São Paulo"
+    "Location": "São Paulo",
+    "Category": "hatch",
+    "Fuel": "elétrico"
   },
   {
     "Name": "Toyota",
     "Model": "Corolla",
-    "Image": "exemplo.png",
+    "Image": "/cars/toyota-corolla.jpg",
     "Price": 112000,
-    "Location": "São Paulo"
+    "Location": "São Paulo",
+    "Category": "sedan",
+    "Fuel": "flex"
   },
   {
     "Name": "Volkswagen",
     "Model": "T-Cross",
-    "Image": "exemplo.png",
+    "Image": "/cars/volkswagen-t-cross.jpg",
     "Price": 118500,
-    "Location": "Campinas"
+    "Location": "Campinas",
+    "Category": "suv",
+    "Fuel": "flex"
   },
   {
     "Name": "Honda",
     "Model": "Civic",
-    "Image": "exemplo.png",
+    "Image": "/cars/honda-civic.jpg",
     "Price": 105000,
-    "Location": "Rio de Janeiro"
+    "Location": "Rio de Janeiro",
+    "Category": "sedan",
+    "Fuel": "gasolina"
   },
   {
     "Name": "Chevrolet",
     "Model": "Onix",
-    "Image": "exemplo.png",
+    "Image": "/cars/chevrolet-onix.jpg",
     "Price": 85000,
-    "Location": "Belo Horizonte"
+    "Location": "Belo Horizonte",
+    "Category": "hatch",
+    "Fuel": "flex"
   },
   {
     "Name": "Hyundai",
     "Model": "HB20",
-    "Image": "exemplo.png",
+    "Image": "/cars/hyundai-hb20.jpg",
     "Price": 79000,
-    "Location": "São Paulo"
+    "Location": "São Paulo",
+    "Category": "hatch",
+    "Fuel": "flex"
   },
   {
     "Name": "Renault",
     "Model": "Kwid",
-    "Image": "exemplo.png",
+    "Image": "/cars/renault-kwid.jpg",
     "Price": 68990,
-    "Location": "Curitiba"
+    "Location": "Curitiba",
+    "Category": "hatch",
+    "Fuel": "flex"
   },
   {
     "Name": "Fiat",
     "Model": "Pulse",
-    "Image": "exemplo.png",
+    "Image": "/cars/fiat-pulse.jpg",
     "Price": 96000,
-    "Location": "São Paulo"
+    "Location": "São Paulo",
+    "Category": "suv",
+    "Fuel": "flex"
   },
   {
     "Name": "Jeep",
     "Model": "Renegade",
-    "Image": "exemplo.png",
+    "Image": "/cars/jeep-renegade.jpg",
     "Price": 122000,
-    "Location": "Porto Alegre"
+    "Location": "Porto Alegre",
+    "Category": "suv",
+    "Fuel": "flex"
   },
   {
     "Name": "Peugeot",
     "Model": "208",
-    "Image": "exemplo.png",
+    "Image": "/cars/peugeot-208.jpg",
     "Price": 87500,
-    "Location": "São Paulo"
+    "Location": "São Paulo",
+    "Category": "hatch",
+    "Fuel": "flex"
   }
 ]

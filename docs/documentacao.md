@@ -93,7 +93,7 @@ Os campos originais ficaram como estavam. Entraram só dois campos novos, que é
 | BYD Dolphin | hatch | elétrico |
 | Toyota Corolla | sedan | flex |
 | Volkswagen T-Cross | suv | flex |
-| Honda Civic | sedan | flex |
+| Honda Civic | sedan | gasolina |
 | Chevrolet Onix | hatch | flex |
 | Hyundai HB20 | hatch | flex |
 | Renault Kwid | hatch | flex |
@@ -194,8 +194,8 @@ Algumas ideias trariam resultado para o negócio, mas dependem de coisas que um 
 | Requisito do desafio | Onde é atendido | Status |
 |---|---|---|
 | Buscar e visualizar carros de forma intuitiva | A Busca, A Tela | ⏳ |
-| Usar o JSON fornecido | A Base | ⏳ |
-| Atualizar as imagens | A Base | ⏳ |
+| Usar o JSON fornecido | A Base | ✅ |
+| Atualizar as imagens | A Base, Créditos das Imagens | ✅ |
 | Caso 1: o carro existe | Os Três Casos de Teste | ⏳ |
 | Caso 2: valor abaixo do disponível | Os Três Casos de Teste | ⏳ |
 | Caso 3: outra localidade | Os Três Casos de Teste | ⏳ |
@@ -216,6 +216,23 @@ O repositório é público, e o README final reúne o que o desafio pede:
 - **Decisões técnicas e de experiência:** um resumo deste documento.
 - **Plano de Negócios:** modelo de negócio, aquisição dos primeiros usuários, CAC, LTV, monetização e retenção, partindo da leitura em O Que Está em Jogo.
 
+## Créditos das Imagens
+
+As fotos vêm do Wikimedia Commons, com licenças que permitem uso comercial desde que a autoria seja creditada. Uma foto sem licença clara seria um risco jurídico para a empresa, por menor que fosse o projeto.
+
+| Carro | Versão na foto | Autor | Licença | Fonte |
+|---|---|---|---|---|
+| BYD Dolphin | Dolphin 2024 | RL GNZLZ | CC BY-SA 2.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:BYD_Dolphin_2024.jpg) |
+| Toyota Corolla | 2.0 XEi 2023 | Just a Man | CC BY 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2023_Toyota_Corolla_2.0_XEi_(Brazil).jpg) |
+| Volkswagen T-Cross | 170 TSI Trendline 2022 | RL GNZLZ | CC BY-SA 2.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Volkswagen_T-Cross_170_TSi_Trendline_2022.jpg) |
+| Honda Civic | Touring 1.5 Turbo 2017 | JasonVogel | CC BY-SA 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Brazilian_Honda_Civic_touring_2017_(cropped).jpg) |
+| Chevrolet Onix | RS 2020 | NaBUru38 | CC BY-SA 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Chevrolet_Onix_Mk2_RS_2020_in_Maldonado_-_front.jpg) |
+| Hyundai HB20 | 1.0 T-GDi Platinum Plus 2023 | Autosdeprimera | CC BY 3.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2023_Hyundai_HB20_1.0_T-GDi_Platinum_Plus_(Brazil)_front_view.png) |
+| Renault Kwid | 1.0 Life 2021 | RL GNZLZ | CC BY-SA 2.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2021_Renault_Kwid_1.0_Life.jpg) |
+| Fiat Pulse | 1.0 Turbo 200 Audace 2024 | Just a Man | CC BY 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2024_Fiat_Pulse_1.0_Turbo_200_Audace_(front).jpg) |
+| Jeep Renegade | versão brasileira, antes da reestilização | JasonVogel | CC BY-SA 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Brazilian_Jeep_Renegade.jpg) |
+| Peugeot 208 | 1.6 Feline 2020 | Garagem do Jabulas | CC BY 3.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:2020_Peugeot_208_1.6_EC5_VTi_Feline_(built_in_Argentina).png) |
+
 ## Andamento
 
 Esta seção é o diário do projeto. Cada etapa entra aqui quando termina, com o que foi feito e o que mudou em relação ao plano.
@@ -228,11 +245,14 @@ A arquitetura acima foi escrita antes de qualquer código, para que cada etapa s
 
 O projeto foi criado com Next.js 16, TypeScript, Tailwind 4 e ESLint, usando o App Router. O conteúdo de exemplo do template saiu, a página ficou em português e com título e descrição do produto. Lint e build passam sem erros.
 
+### 2026-09-28: Base e imagens
+
+O `cars.json` ganhou os campos `Category` e `Fuel`, no mesmo padrão de nomes dos campos originais, e o `Image` de cada carro passou a apontar para uma foto real em `public/cars/`. As fotos foram escolhidas pelo mesmo critério de um anúncio: o carro de frente, em três quartos e sem nada cortado, e sempre na versão vendida no Brasil. Uma foto de versão estrangeira mostra um carro que a pessoa não vai encontrar na concessionária, e um anúncio que não bate com o carro de verdade quebra a confiança no momento da compra. O Civic com foto livre disponível é o Touring, que é movido a gasolina, então o `Fuel` dele segue a foto.
+
 ### Próximas Etapas
 
-1. Enriquecer o `cars.json` e trocar as imagens
-2. Parser e ordenação, com os três casos de teste cobertos por testes
-3. Interface: busca, filtros, cards com o botão de simulação e carregamento, responsiva
-4. Integração com a IA e sugestões clicáveis
-5. Deploy na Vercel
-6. README final com o link do deploy, decisões e Plano de Negócios
+1. Parser e ordenação, com os três casos de teste cobertos por testes
+2. Interface: busca, filtros, cards com o botão de simulação e carregamento, responsiva
+3. Integração com a IA e sugestões clicáveis
+4. Deploy na Vercel
+5. README final com o link do deploy, decisões e Plano de Negócios
