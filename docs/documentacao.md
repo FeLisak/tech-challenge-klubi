@@ -107,11 +107,12 @@ As imagens foram trocadas por fotos reais de cada modelo. Num anúncio de carro,
 
 A pessoa pode digitar livremente ("Dolphin em SP por uns 100 mil") ou ajustar os filtros de modelo, cidade e preço máximo. Os dois caminhos levam ao mesmo lugar: filtros na URL. Assim, a busca pode ser compartilhada, e quem manda o link para alguém da família traz um segundo interessado sem custo de aquisição.
 
-O parser trabalha sobre o texto em minúsculas e sem acento, e procura três coisas:
+O parser trabalha sobre o texto em minúsculas e sem acento, e procura:
 
-- **Preço:** um número seguido ou não de "mil" ou "k". "Até" vira teto rígido. Sem "até", o valor é tratado como aproximado e aceita até 10% acima, porque quem diz "uns 100 mil" não descarta um carro de R$ 100.500.
+- **Preço:** um número seguido ou não de "mil" ou "k", ou precedido de "R$". "Até" vira teto rígido. Sem "até", o valor é tratado como aproximado e aceita até 10% acima, porque quem diz "uns 100 mil" não descarta um carro de R$ 100.500. Um número solto só vira preço se tiver cara de preço, porque "208" é um modelo, não um orçamento.
 - **Cidade:** o nome da cidade ou um apelido comum ("SP", "sampa", "rio", "bh", "poa").
-- **Modelo:** o nome do modelo ou da marca. Um erro de uma letra ("dolfin") ainda é aceito.
+- **Modelo e marca:** o nome como está na base, apelidos como "VW" e erros de digitação comuns ("dolfin", "t cross", "hb 20").
+- **Categoria e combustível:** "SUV", "sedã", "hatch", "elétrico", "flex".
 
 O que o parser entendeu aparece nos filtros, então a pessoa vê a interpretação e corrige se precisar. Cada busca mal entendida é um cliente que vai embora achando que o carro não existe.
 
@@ -249,10 +250,15 @@ O projeto foi criado com Next.js 16, TypeScript, Tailwind 4 e ESLint, usando o A
 
 O `cars.json` ganhou os campos `Category` e `Fuel`, no mesmo padrão de nomes dos campos originais, e o `Image` de cada carro passou a apontar para uma foto real em `public/cars/`. As fotos foram escolhidas pelo mesmo critério de um anúncio: o carro de frente, em três quartos e sem nada cortado, e sempre na versão vendida no Brasil. Uma foto de versão estrangeira mostra um carro que a pessoa não vai encontrar na concessionária, e um anúncio que não bate com o carro de verdade quebra a confiança no momento da compra. O Civic com foto livre disponível é o Touring, que é movido a gasolina, então o `Fuel` dele segue a foto.
 
+### 2026-09-28: Parser e ordenação
+
+O entendimento da busca e a ordenação dos resultados ficaram em funções puras, separadas da interface: `lib/parse.ts` transforma o texto em filtros e `lib/rank.ts` ordena a base a partir deles. Como não dependem de tela nem de servidor, os três casos de teste do desafio viraram testes automatizados em `lib/search.test.ts`, rodando com o executor de testes nativo do Node, sem nenhuma dependência nova. Se uma mudança futura quebrar um dos casos que a Klubi vai avaliar, o teste acusa antes do deploy.
+
+Os testes cobrem também o que protege a conversão: nenhuma busca termina em lista vazia, e um número de modelo como "208" não é confundido com orçamento.
+
 ### Próximas Etapas
 
-1. Parser e ordenação, com os três casos de teste cobertos por testes
-2. Interface: busca, filtros, cards com o botão de simulação e carregamento, responsiva
-3. Integração com a IA e sugestões clicáveis
-4. Deploy na Vercel
-5. README final com o link do deploy, decisões e Plano de Negócios
+1. Interface: busca, filtros, cards com o botão de simulação e carregamento, responsiva
+2. Integração com a IA e sugestões clicáveis
+3. Deploy na Vercel
+4. README final com o link do deploy, decisões e Plano de Negócios
