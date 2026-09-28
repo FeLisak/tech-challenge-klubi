@@ -234,7 +234,7 @@ Algumas ideias trariam resultado para o negócio, mas dependem de coisas que um 
 | Caso 2: valor abaixo do disponível | Os Três Casos de Teste | ✅ |
 | Caso 3: outra localidade | Os Três Casos de Teste | ✅ |
 | Diferencial: IA | A IA | ✅ |
-| Diferencial: deploy na nuvem | Onde Roda | ⏳ |
+| Diferencial: deploy na nuvem | Onde Roda | ✅ |
 | Diferencial: design e usabilidade | A Tela, Detalhes Que Vendem o Carro | ⏳ |
 | Diferencial: organização de código e commits | Onde Roda | ⏳ |
 | Repositório público | A Entrega | ⏳ |
@@ -317,7 +317,12 @@ O prompt também ganhou uma tradução curta das intenções mais comuns: "econ�
 
 O primeiro teste com o provedor real falhou por um detalhe de configuração: a URL apontava para a raiz do provedor, e não para o endpoint de chat. Se aconteceu aqui, aconteceria com quem fosse rodar o projeto. Por isso o `.env.example` passou a explicar o formato de cada variável, e a documentação ganhou a seção Como Rodar. O `package.json` agora declara a versão mínima do Node, e a seção Onde Roda deixa claro que a aplicação roda em qualquer servidor Node, com a Vercel como escolha de deploy e não como dependência.
 
+### 2026-09-28: Deploy
+
+A aplicação está no ar em [tech-challenge-klubi.vercel.app](https://tech-challenge-klubi.vercel.app), publicada pela integração da Vercel com o GitHub, com as variáveis da IA configuradas no painel. Em produção, os três casos de teste respondem em menos de meio segundo, e a busca vaga com IA em cerca de um segundo.
+
+A conferência em produção revelou um detalhe de texto: quando a pessoa escolhia nos filtros uma categoria diferente da do carro que buscou, por exemplo sedã buscando um Dolphin, a seção continuava dizendo "Parecidos com o Dolphin", e os sedãs apareciam como "Mesma categoria". Agora a seção passa a se chamar "Opções na categoria Sedã", e a etiqueta vira "Categoria escolhida". É pequeno, mas uma explicação errada ensina a pessoa a desconfiar de todas as outras.
+
 ### Próximas Etapas
 
-1. Deploy na Vercel
-2. README final com o link do deploy, decisões e Plano de Negócios
+1. README final com o link do deploy, decisões e Plano de Negócios
