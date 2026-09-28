@@ -238,8 +238,8 @@ Algumas ideias trariam resultado para o negócio, mas dependem de coisas que um 
 | Diferencial: design e usabilidade | A Tela | ✅ |
 | Diferencial: organização de código e commits | Onde Roda | ✅ |
 | Repositório público | A Entrega | ✅ |
-| README: como rodar, funcionamento, decisões | A Entrega | ⏳ |
-| README: Plano de Negócios | A Entrega, O Que Está em Jogo | ⏳ |
+| README: como rodar, funcionamento, decisões | A Entrega | ✅ |
+| README: Plano de Negócios | A Entrega, O Que Está em Jogo | ✅ |
 
 ## A Entrega
 
@@ -323,6 +323,8 @@ A aplicação está no ar em [tech-challenge-klubi.vercel.app](https://tech-chal
 
 A conferência em produção revelou um detalhe de texto: quando a pessoa escolhia nos filtros uma categoria diferente da do carro que buscou, por exemplo sedã buscando um Dolphin, a seção continuava dizendo "Parecidos com o Dolphin", e os sedãs apareciam como "Mesma categoria". Agora a seção passa a se chamar "Opções na categoria Sedã", e a etiqueta vira "Categoria escolhida". É pequeno, mas uma explicação errada ensina a pessoa a desconfiar de todas as outras.
 
-### Próximas Etapas
+### 2026-09-28: README e Plano de Negócios
 
-1. README final com o link do deploy, decisões e Plano de Negócios
+O README do repositório passou a ser o da entrega: o link do deploy com uma busca pronta para cada caso de teste e para a busca com IA, como rodar, um resumo das decisões e o Plano de Negócios. Os detalhes continuam neste documento, para o README ser lido em poucos minutos.
+
+O Plano de Negócios parte da leitura feita em O Que Está em Jogo: o buscador é o topo de funil do consórcio, e não um produto que precise se pagar sozinho. O primeiro público é a própria base da Klubi, porque quem é contemplado precisa escolher um carro, e esse é o canal de aquisição mais barato que existe. CAC e LTV foram estimados a partir de premissas de mercado, escritas junto dos números, para que cada uma possa ser trocada pelo dado real da Klubi sem refazer o raciocínio.
