@@ -256,6 +256,8 @@ O entendimento da busca e a ordenação dos resultados ficaram em funções pura
 
 Os testes cobrem também o que protege a conversão: nenhuma busca termina em lista vazia, e um número de modelo como "208" não é confundido com orçamento.
 
+Eu costumo trabalhar com TDD, escrevendo o teste antes do código. Aqui não foi assim: com o prazo curto do desafio, os testes vieram junto com a implementação, e o esforço foi concentrado em cobrir os casos que decidem a avaliação em vez de cada detalhe do parser.
+
 ### Próximas Etapas
 
 1. Interface: busca, filtros, cards com o botão de simulação e carregamento, responsiva
