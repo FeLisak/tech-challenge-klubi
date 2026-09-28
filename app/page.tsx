@@ -8,12 +8,15 @@ import { rank, type Match } from "@/lib/rank";
 
 const CREDITS_URL = "https://github.com/FeLisak/tech-challenge-klubi/blob/main/docs/documentacao.md#créditos-das-imagens";
 
+// "no Rio de Janeiro", mas "em São Paulo".
+const where = (city: string) => (city === "Rio de Janeiro" ? `no ${city}` : `em ${city}`);
+
 // A mensagem de cada caso de teste: encontrar, passar do orçamento ou estar em outra cidade.
 function headline({ car, overBudget, inCity }: Match): { title: string; detail: string } {
   const name = `${car.Name} ${car.Model}`;
   if (overBudget > 0 && !inCity) {
     return {
-      title: `O ${name} está em ${car.Location} e passa ${brl(overBudget)} do seu orçamento.`,
+      title: `O ${name} está ${where(car.Location)} e passa ${brl(overBudget)} do seu orçamento.`,
       detail: "No consórcio, o valor vira mensalidade sem juros. Abaixo, parecidos mais perto de você e no seu bolso.",
     };
   }
@@ -25,7 +28,7 @@ function headline({ car, overBudget, inCity }: Match): { title: string; detail: 
   }
   if (!inCity) {
     return {
-      title: `O ${name} está disponível em ${car.Location}.`,
+      title: `O ${name} está disponível ${where(car.Location)}.`,
       detail: "Simule o consórcio para ele ou veja abaixo os parecidos mais perto de você.",
     };
   }

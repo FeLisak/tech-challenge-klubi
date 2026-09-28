@@ -22,7 +22,7 @@ A Klubi é uma administradora de consórcio digital, e o consórcio de carros co
 
 Para uma empresa assim, um buscador de carros não é o produto. É a porta de entrada. Quem busca um carro está a poucos passos de uma decisão de compra grande, e esse é o melhor momento para apresentar uma forma de pagar por ela. O buscador funciona quando a pessoa sai dele com um próximo passo, e não só quando ela encontra o carro.
 
-Isso muda a leitura dos casos de teste. Os casos 2 e 3 são exatamente onde um marketplace comum perde o cliente: o carro é caro demais ou está longe demais. E são justamente os casos em que a Klubi tem o melhor argumento. O consórcio transforma o preço em mensalidade, e a carta de crédito compra o carro onde ele estiver.
+Isso muda a leitura dos casos de teste. Os casos 2 e 3 são exatamente onde um marketplace comum perde o cliente: o carro é caro demais ou está longe demais. E são justamente os casos em que a Klubi tem o melhor argumento. O consórcio transforma o preço em mensalidade, e o carro que a pessoa queria continua a um clique da simulação, esteja onde estiver.
 
 ## Como as Decisões Foram Tomadas
 
@@ -105,7 +105,7 @@ As imagens foram trocadas por fotos reais de cada modelo. Num anúncio de carro,
 
 ## A Busca
 
-A pessoa pode digitar livremente ("Dolphin em SP por uns 100 mil") ou ajustar os filtros de modelo, cidade e preço máximo. Os dois caminhos levam ao mesmo lugar: filtros na URL. Assim, a busca pode ser compartilhada, e quem manda o link para alguém da família traz um segundo interessado sem custo de aquisição.
+A pessoa pode digitar livremente ("Dolphin em SP por uns 100 mil") ou ajustar os filtros de modelo, cidade, categoria e preço máximo. Os dois caminhos levam ao mesmo lugar: filtros na URL. Assim, a busca pode ser compartilhada, e quem manda o link para alguém da família traz um segundo interessado sem custo de aquisição.
 
 O parser trabalha sobre o texto em minúsculas e sem acento, e procura:
 
@@ -126,16 +126,17 @@ O carro pedido continua visível mesmo quando não serve. Ele é a referência d
 |---|---|---|---|
 | 1. O carro existe | "BYD Dolphin em SP por uns 100 mil" | O Dolphin em destaque, com o caminho para simular o consórcio | A pessoa encontrou o que queria; o trabalho agora é não atrapalhar |
 | 2. Valor abaixo do disponível | "Dolphin até 80 mil" | O Dolphin marcado "R$ 19.990 acima do seu orçamento" e, logo abaixo, os hatches que cabem nos R$ 80 mil, como o HB20 em SP | Ela vê dois caminhos: um carro parecido que cabe hoje ou o carro que ela quer, pago em mensalidades |
-| 3. Outra localidade | "Civic em São Paulo" | O Civic marcado "disponível no Rio de Janeiro" e, logo abaixo, os sedans em São Paulo, como o Corolla | A distância deixa de ser o motivo para desistir: há um sedan perto, e a carta de crédito compra o carro onde ele estiver |
+| 3. Outra localidade | "Civic em São Paulo" | O Civic marcado "disponível no Rio de Janeiro" e, logo abaixo, os sedãs em São Paulo, como o Corolla | A distância deixa de ser o motivo para desistir: há um sedã perto, e o Civic continua a um clique da simulação |
 
-Se o modelo pedido não existir na base, a tela diz isso e mostra os mais parecidos pelo que mais foi possível entender da busca, como a categoria ou a faixa de preço.
+Quando a busca não traz nada reconhecível, como um modelo que não está na base, a tela diz isso, mostra todos os carros e sugere usar o nome do carro ou os filtros. Se ao menos o preço ou a cidade forem reconhecidos, a lista já vem ordenada por eles.
 
 ## A Tela
 
 Uma página só: a busca no topo, os filtros logo abaixo e os resultados em cards com foto, nome, preço, cidade e o botão para simular o consórcio daquele carro.
 
 - **Responsiva desde o início.** A maior parte das buscas por carro acontece no celular, então o layout é pensado primeiro para uma coluna e se abre em grade nas telas maiores.
-- **Feedback de carregamento.** Enquanto a IA responde, a lista mostra um esqueleto dos cards no lugar de uma tela parada, que é o momento em que as pessoas fecham a aba. Sem IA, o resultado é imediato.
+- **Feedback de carregamento.** Enquanto a próxima busca carrega, inclusive quando a IA está respondendo, a página mostra um esqueleto dos cards no lugar de uma tela parada, que é o momento em que as pessoas fecham a aba.
+- **Microinterações.** Os cards entram em cascata, sobem levemente ao passar o mouse e os botões respondem ao toque. Quem prefere menos movimento, pela configuração do sistema, não vê as animações.
 - **Acessível.** Campos com rótulo, fotos com texto alternativo e navegação por teclado. Acessibilidade também é alcance: ninguém fica de fora do funil.
 
 ## A IA
@@ -144,13 +145,13 @@ A IA só é chamada quando o parser não descobre que carro a pessoa quer: nenhu
 
 A chamada tem temperatura 0 e um limite de alguns segundos. Se o provedor de IA falhar, demorar ou não estiver configurado, a busca segue só com o parser. Uma falha do fornecedor não derruba a vitrine.
 
-Abaixo da busca ficam sugestões clicáveis, como "SUV econômico em SP" e "um elétrico pra cidade". Elas mostram o que dá para digitar, tiram a pessoa da tela em branco e caem justamente no caminho da IA. Quando a IA contribui com um filtro, ele aparece marcado como interpretado por IA.
+Abaixo da busca ficam sugestões clicáveis. Três delas são os casos de teste do desafio, e duas, "algo econômico pra família" e "carro espaçoso pra viajar", são buscas vagas. Elas mostram o que dá para digitar, tiram a pessoa da tela em branco, e as vagas caem justamente no caminho da IA. Quando a IA contribui com um filtro, ele aparece marcado como interpretado por IA.
 
 ## Segurança
 
 Os cuidados de segurança se concentram na IA, porque é onde estão o risco financeiro e o risco de marca:
 
-- **A chave da IA fica só no servidor**, em variável de ambiente da Vercel, e nunca vai para o repositório. Uma chave vazada é uma conta que outra pessoa usa e a empresa paga.
+- **A chave da IA fica só no servidor**, em variável de ambiente da hospedagem, e nunca vai para o repositório. Uma chave vazada é uma conta que outra pessoa usa e a empresa paga.
 - **A resposta da IA nunca é exibida.** Ela só vira filtro, e só se o valor existir na base. Todo texto que a pessoa lê sai de um template. Uma instituição regulada pelo Banco Central não pode correr o risco de uma IA prometer um preço ou uma condição que não existe.
 - **O texto da busca tem tamanho máximo**, e a conta do provedor de IA deve operar com saldo pré-pago ou limite de gasto, o que coloca um teto no custo mesmo em caso de abuso.
 
@@ -201,11 +202,10 @@ Com o desafio resolvido, estas são as melhorias candidatas. Cada uma só entra 
 
 - **Mensalidade do consórcio no caso 2:** trocar "R$ 19.990 a mais" por uma mensalidade estimada, que a pessoa compara com o próprio salário. As premissas do cálculo ficam escritas no card, e o valor final vem da simulação oficial.
 - **Distância no caso 3:** mostrar "≈ 360 km" em vez de só o nome da cidade.
-- **Microinterações:** transições suaves ao trocar filtros e ao reordenar os cards.
 
 ## Como Saber se Está Funcionando
 
-Um buscador para uma empresa de consórcio se mede pelo que acontece depois da busca. Quatro números bastam para saber se ele cumpre o papel:
+Um buscador para uma empresa de consórcio se mede pelo que acontece depois da busca. Quatro números bastam para saber se ele cumpre o papel. Esta versão ainda não coleta esses números; registrar esses eventos seria o primeiro passo depois de colocar o buscador na frente de clientes reais:
 
 - **Cliques em "simular consórcio" por busca:** a conversão que importa.
 - **Cliques em alternativas nos casos 2 e 3:** mostram se as sugestões convencem ou só ocupam espaço.
@@ -235,9 +235,9 @@ Algumas ideias trariam resultado para o negócio, mas dependem de coisas que um 
 | Caso 3: outra localidade | Os Três Casos de Teste | ✅ |
 | Diferencial: IA | A IA | ✅ |
 | Diferencial: deploy na nuvem | Onde Roda | ✅ |
-| Diferencial: design e usabilidade | A Tela, Detalhes Que Vendem o Carro | ⏳ |
-| Diferencial: organização de código e commits | Onde Roda | ⏳ |
-| Repositório público | A Entrega | ⏳ |
+| Diferencial: design e usabilidade | A Tela | ✅ |
+| Diferencial: organização de código e commits | Onde Roda | ✅ |
+| Repositório público | A Entrega | ✅ |
 | README: como rodar, funcionamento, decisões | A Entrega | ⏳ |
 | README: Plano de Negócios | A Entrega, O Que Está em Jogo | ⏳ |
 
