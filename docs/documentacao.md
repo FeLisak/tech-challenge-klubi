@@ -228,23 +228,28 @@ Algumas ideias trariam resultado, mas dependem de coisas que um desafio técnico
 - Catálogo real, vindo de parceiros. Com milhares de carros, busca semântica e recomendação personalizada passam a compensar o custo. Com 10 carros fictícios, seriam só custo.
 - Teste A/B das mensagens dos casos 2 e 3, para descobrir qual frase converte mais, por exemplo "R$ 19.990 acima do orçamento" ou "a partir de R$ X por mês". Precisa de tráfego real para dar resultado confiável.
 
-## Mapa dos Requisitos
+## Requisitos da Solução
 
-| Requisito do desafio | Onde é atendido | Status |
+O enunciado define o mínimo. A solução foi considerada pronta apenas quando atendeu a todos os critérios abaixo, que cobrem o enunciado e vão além dele:
+
+| Requisito | Onde é atendido | Status |
 |---|---|---|
-| Buscar e visualizar carros de forma intuitiva | A Busca, A Tela | ✅ |
-| Usar o JSON fornecido | A Base | ✅ |
-| Atualizar as imagens | A Base, Créditos das Imagens | ✅ |
-| Caso 1: o carro existe | Os Três Casos de Teste | ✅ |
-| Caso 2: valor abaixo do disponível | Os Três Casos de Teste | ✅ |
-| Caso 3: outra localidade | Os Três Casos de Teste | ✅ |
-| Diferencial: IA | A IA | ✅ |
-| Diferencial: deploy na nuvem | Onde Roda | ✅ |
-| Diferencial: design e usabilidade | A Tela | ✅ |
-| Diferencial: organização de código e commits | Onde Roda | ✅ |
-| Repositório público | A Entrega | ✅ |
-| README: como rodar, funcionamento, decisões | A Entrega | ✅ |
-| README: Plano de Negócios | A Entrega, O Que Está em Jogo | ✅ |
+| A pessoa encontra o carro escrevendo do jeito dela, com apelidos, erros de digitação e preços aproximados | A Busca | ✅ |
+| O carro que existe e cabe na busca aparece em destaque | Os Três Casos de Teste | ✅ |
+| Um carro acima do orçamento mostra quanto passa e oferece parecidos que cabem | Os Três Casos de Teste | ✅ |
+| Um carro em outra cidade mostra onde está e oferece parecidos por perto | Os Três Casos de Teste | ✅ |
+| Nenhuma busca termina em lista vazia | Os Três Casos de Teste | ✅ |
+| Toda sugestão explica por que está ali | Os Três Casos de Teste, A Tela | ✅ |
+| Todo carro tem um caminho até a simulação do consórcio | A Tela | ✅ |
+| Buscas vagas são interpretadas por IA, sem que a busca dependa dela | A IA | ✅ |
+| A IA nunca exibe texto próprio nem usa valores que não existem na base | A IA, Segurança | ✅ |
+| A base original é preservada, com fotos reais das versões brasileiras e créditos aos autores | A Base, Créditos das Imagens | ✅ |
+| A tela funciona bem no celular, dá retorno durante o carregamento e é acessível | A Tela | ✅ |
+| A aplicação está publicada e roda em qualquer servidor Node, sem depender de fornecedor | Onde Roda | ✅ |
+| Qualquer pessoa consegue rodar o projeto seguindo a documentação | Como Rodar | ✅ |
+| Os cenários da avaliação são testes automatizados | Onde Roda, Andamento | ✅ |
+| O código é separado por responsabilidade, e o histórico de commits conta a evolução do projeto | Onde Roda | ✅ |
+| O repositório é público, e o README traz deploy, instruções, decisões e Plano de Negócios | A Entrega | ✅ |
 
 ## A Entrega
 
