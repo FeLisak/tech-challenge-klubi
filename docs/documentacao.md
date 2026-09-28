@@ -88,7 +88,7 @@ O `data/cars.json` traz 10 carros com `Name`, `Model`, `Image`, `Price` e `Locat
 
 Os campos originais ficaram como estavam. Entraram só dois campos novos, que é o mínimo para "parecido" fazer sentido:
 
-| Carro | `category` | `fuel` |
+| Carro | `Category` | `Fuel` |
 |---|---|---|
 | BYD Dolphin | hatch | elétrico |
 | Toyota Corolla | sedan | flex |
