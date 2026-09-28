@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Instrument_Serif } from "next/font/google";
+import { Red_Hat_Display, Red_Hat_Text } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const redHatDisplay = Red_Hat_Display({
+  variable: "--font-red-hat-display",
   subsets: ["latin"],
 });
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
+const redHatText = Red_Hat_Text({
+  variable: "--font-red-hat-text",
   subsets: ["latin"],
-  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -20,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${geistSans.variable} ${instrumentSerif.variable} h-full antialiased`}>
+    <html lang="pt-BR" className={`${redHatDisplay.variable} ${redHatText.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

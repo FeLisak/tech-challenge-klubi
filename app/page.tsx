@@ -59,23 +59,25 @@ export default async function Home({ searchParams }: PageProps<"/">) {
 
   return (
     <>
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24">
-        <header className="py-14 sm:py-20">
-          <h1 className="max-w-2xl font-serif text-4xl leading-[1.1] tracking-[-0.02em] text-ink sm:text-6xl">
+      <header className="rounded-b-[2rem] bg-ink text-white">
+        <div className="mx-auto w-full max-w-5xl px-4 pt-14 pb-20 sm:pt-20 sm:pb-24">
+          <h1 className="max-w-2xl font-display text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-6xl">
             Encontre o carro certo, no seu orçamento.
           </h1>
-          <p className="mt-4 max-w-xl text-muted">
+          <p className="mt-4 max-w-xl text-white/70">
             Escreva do seu jeito: modelo, cidade e quanto quer pagar. A gente entende e mostra o que chega mais perto.
           </p>
           <div className="mt-8">
             <SearchBar query={query} />
           </div>
-        </header>
+        </div>
+      </header>
 
-        <section aria-label="Filtros" className="border-y border-line py-5">
+      <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24">
+        <section aria-label="Filtros" className="relative -mt-10 rounded-3xl bg-surface p-5 shadow-[0_8px_24px_rgba(37,42,45,0.08)] sm:p-6">
           {byAI && (
             <p className="mb-4 flex flex-wrap items-center gap-2 text-sm text-muted">
-              <span className="rounded-full bg-blue-bg px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wider text-blue-fg">
+              <span className="rounded-full bg-purple-bg px-2.5 py-0.5 text-xs font-bold text-purple-fg">
                 Interpretado por IA
               </span>
               Estes filtros saíram da sua busca. Ajuste se não for bem isso.
@@ -92,7 +94,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
 
         {main && (
           <section className="pt-12" aria-labelledby="requested">
-            <h2 id="requested" className="font-serif text-3xl leading-tight tracking-[-0.02em] text-ink">
+            <h2 id="requested" className="font-display text-2xl font-extrabold leading-tight tracking-tight text-ink sm:text-3xl">
               {main.title}
             </h2>
             <p className="mt-2 text-muted">{main.detail}</p>
@@ -105,7 +107,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
         )}
 
         <section className="pt-12" aria-labelledby="alternatives">
-          <h2 id="alternatives" className="text-xs font-medium uppercase tracking-wider text-muted">
+          <h2 id="alternatives" className="font-display text-xl font-bold tracking-tight text-ink">
             {chosenCategory
               ? `Opções na categoria ${chosenCategory}`
               : main
@@ -133,9 +135,9 @@ export default async function Home({ searchParams }: PageProps<"/">) {
         </section>
       </main>
 
-      <footer className="border-t border-line py-6 text-center text-xs text-muted">
+      <footer className="bg-ink py-8 text-center text-xs text-white/60">
         Fotos do Wikimedia Commons.{" "}
-        <a href={CREDITS_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-ink">
+        <a href={CREDITS_URL} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-brand">
           Ver créditos dos autores
         </a>
       </footer>

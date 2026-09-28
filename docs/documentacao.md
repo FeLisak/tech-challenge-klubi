@@ -134,6 +134,8 @@ Quando a busca não traz nada reconhecível, como um modelo fora da base, a tela
 
 É uma página só: busca no topo, filtros abaixo e os resultados em cards com foto, nome, preço, cidade e o botão de simular o consórcio daquele carro.
 
+O visual segue a identidade da Klubi: cabeçalho grafite com cantos arredondados, fundo cinza-claro, cards brancos, botões de ação em âmbar e a tipografia Red Hat. Quem vem do buscador para a simulação não percebe que mudou de produto, e isso ajuda a manter a confiança no momento de fechar negócio.
+
 O layout foi pensado primeiro para o celular, onde acontece a maior parte das buscas por carro. No celular os cards ficam em uma coluna, e no desktop viram grade.
 
 Enquanto a próxima busca carrega, inclusive quando a IA está respondendo, aparece um esqueleto dos cards. Tela parada é o momento em que as pessoas fecham a aba.
@@ -249,16 +251,7 @@ O enunciado define o mínimo. A solução foi considerada pronta apenas quando a
 | Qualquer pessoa consegue rodar o projeto seguindo a documentação | Como Rodar | ✅ |
 | Os cenários da avaliação são testes automatizados | Onde Roda, Andamento | ✅ |
 | O código é separado por responsabilidade, e o histórico de commits conta a evolução do projeto | Onde Roda | ✅ |
-| O repositório é público, e o README traz deploy, instruções, decisões e Plano de Negócios | A Entrega | ✅ |
-
-## A Entrega
-
-O repositório é público, e o README reúne o que o desafio pede:
-
-- como rodar, incluindo o `.env` opcional da IA;
-- o link do deploy na Vercel, com uma busca pronta para cada caso de teste;
-- um resumo das decisões técnicas e de experiência, que estão completas aqui;
-- o Plano de Negócios, que parte da leitura feita em O Que Está em Jogo.
+| O repositório é público, e o README traz deploy, instruções, decisões e Plano de Negócios | README | ✅ |
 
 ## Créditos das Imagens
 
@@ -311,7 +304,7 @@ Os filtros já vêm preenchidos com o que o parser entendeu, e o que a pessoa al
 
 Cada caso de teste tem uma mensagem no topo dos resultados, e o carro pedido aparece em destaque, com foto grande, mesmo quando não cabe no orçamento ou está em outra cidade. Os parecidos vêm abaixo, com etiquetas que explicam por que estão ali: mesma categoria, cabe no orçamento, na sua cidade ou quanto passa do orçamento. O rodapé leva aos créditos das fotos.
 
-O visual é monocromático, com cor só nas etiquetas, para que o destaque fique com o carro. A tela foi conferida no desktop e no celular.
+A tela foi conferida no desktop e no celular.
 
 ### 2026-09-28: Integração com a IA
 
@@ -344,3 +337,9 @@ O projeto foi revisado item por item contra o README do desafio. Tudo estava cob
 O README do repositório passou a ser o da entrega: link do deploy com uma busca pronta para cada caso de teste e para a busca com IA, como rodar, um resumo das decisões e o Plano de Negócios. Os detalhes continuam aqui, para que o README possa ser lido em poucos minutos.
 
 O Plano de Negócios parte da leitura de O Que Está em Jogo: o buscador serve para trazer clientes ao consórcio, e não precisa se pagar sozinho. O primeiro público é a própria base da Klubi, porque quem é contemplado precisa escolher um carro, e esse é o canal de aquisição mais barato disponível. CAC e LTV foram estimados com premissas de mercado, cada uma escrita junto do número, para que possa ser trocada pelo dado real da Klubi sem refazer a conta.
+
+### 2026-09-28: Identidade visual da Klubi
+
+A primeira versão da tela usava uma linha monocromática neutra. Como o buscador leva direto à simulação da Klubi, a tela passou a seguir a identidade visual do site deles: grafite (`#252A2D`) no cabeçalho, fundo cinza-claro, cards brancos bem arredondados, âmbar (`#FFB73F`) nos botões de ação e a família Red Hat na tipografia. O roxo da marca ficou para as etiquetas de categoria e para a marcação da IA. O logo da Klubi não foi usado, só a linguagem visual.
+
+A seção "A Entrega" deste documento também foi removida, porque repetia o que o README já mostra.

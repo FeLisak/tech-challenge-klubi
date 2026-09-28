@@ -6,8 +6,8 @@ import { AutoSubmitSelect } from "./auto-submit-select";
 const unique = (values: string[]) => [...new Set(values)].sort((a, b) => a.localeCompare(b, "pt-BR"));
 
 export function FilterBar({ query, filters, base, model }: { query: string; filters: Filters; base: Car[]; model?: string }) {
-  const field = "h-10 w-full min-w-0 rounded-md border border-line bg-surface px-3 text-sm font-normal normal-case tracking-normal text-ink outline-none focus:border-ink";
-  const label = "flex min-w-0 flex-col gap-1 text-xs font-medium uppercase tracking-wider text-muted";
+  const field = "h-11 w-full min-w-0 rounded-xl border border-line bg-surface px-3 text-sm font-normal normal-case tracking-normal text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/30";
+  const label = "flex min-w-0 flex-col gap-1.5 text-sm font-semibold text-ink";
 
   return (
     <Form action="/" className="grid grid-cols-2 gap-3 sm:grid-cols-[repeat(4,minmax(0,1fr))_auto] sm:items-end">
@@ -56,7 +56,7 @@ export function FilterBar({ query, filters, base, model }: { query: string; filt
           className={field}
         />
       </label>
-      <button className="col-span-2 h-10 rounded-md border border-ink px-5 text-sm font-medium text-ink transition hover:bg-ink hover:text-white active:scale-[0.98] sm:col-span-1">
+      <button className="col-span-2 h-11 rounded-full bg-ink px-6 font-display text-sm font-bold text-white transition hover:bg-black active:scale-[0.98] sm:col-span-1">
         Aplicar
       </button>
     </Form>

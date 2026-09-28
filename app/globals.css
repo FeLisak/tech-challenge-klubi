@@ -1,23 +1,27 @@
 @import "tailwindcss";
 
+/* Paleta e tipografia inspiradas na identidade visual da Klubi. */
 @theme inline {
-  --color-canvas: #fbfbfa;
+  --color-canvas: #f0f0f2;
   --color-surface: #ffffff;
-  --color-ink: #111111;
-  --color-body: #2f3437;
-  --color-muted: #787774;
-  --color-line: #eaeaea;
-  --color-bone: #f7f6f3;
+  --color-ink: #252a2d;
+  --color-body: #2e2e2e;
+  --color-muted: #5c5f60;
+  --color-line: #e0e3e3;
+  --color-bone: #e5e5e9;
+  --color-brand: #ffb73f;
+  --color-brand-hover: #ffa81a;
+  --color-brand-ink: #1a1000;
+  --color-brand-soft: #fff5e5;
+  --color-brand-deep: #8f5800;
+  --color-green-bg: #e7f6ec;
+  --color-green-fg: #05662b;
   --color-red-bg: #fdebec;
   --color-red-fg: #9f2f2d;
-  --color-green-bg: #edf3ec;
-  --color-green-fg: #346538;
-  --color-yellow-bg: #fbf3db;
-  --color-yellow-fg: #956400;
-  --color-blue-bg: #e1f3fe;
-  --color-blue-fg: #1f6c9f;
-  --font-sans: var(--font-geist-sans);
-  --font-serif: var(--font-instrument-serif);
+  --color-purple-bg: #f1eaff;
+  --color-purple-fg: #670099;
+  --font-sans: var(--font-red-hat-text);
+  --font-display: var(--font-red-hat-display);
 }
 
 body {
