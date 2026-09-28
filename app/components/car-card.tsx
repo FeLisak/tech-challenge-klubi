@@ -16,9 +16,9 @@ const TONES = {
 type Tag = { tone: keyof typeof TONES; text: string };
 
 // Cada tag explica por que o carro está nesta posição da lista.
-function tagsFor(match: Match, { budget, city, alternative }: { budget: boolean; city: boolean; alternative: boolean }): Tag[] {
+function tagsFor(match: Match, { budget, city, categoryTag }: { budget: boolean; city: boolean; categoryTag?: string }): Tag[] {
   const tags: Tag[] = [];
-  if (alternative && match.sameCategory) tags.push({ tone: "blue", text: "Mesma categoria" });
+  if (categoryTag && match.sameCategory) tags.push({ tone: "blue", text: categoryTag });
   if (budget) {
     tags.push(
       match.overBudget > 0
@@ -37,14 +37,15 @@ export function CarCard({
   index,
   budget,
   city,
-  alternative,
+  categoryTag,
   wide = false,
 }: {
   match: Match;
   index: number;
   budget: boolean;
   city: boolean;
-  alternative: boolean;
+  // Texto da etiqueta de categoria; sem ele, a etiqueta não aparece.
+  categoryTag?: string;
   // O carro que a pessoa pediu ganha destaque: foto grande ao lado das informações.
   wide?: boolean;
 }) {
@@ -74,7 +75,7 @@ export function CarCard({
         </div>
         <p className="text-2xl font-semibold tracking-tight text-ink">{brl(car.Price)}</p>
         <ul className="flex flex-wrap gap-1.5">
-          {tagsFor(match, { budget, city, alternative }).map((tag) => (
+          {tagsFor(match, { budget, city, categoryTag }).map((tag) => (
             <li key={tag.text} className={`rounded-full px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wider ${TONES[tag.tone]}`}>
               {tag.text}
             </li>

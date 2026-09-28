@@ -2,7 +2,7 @@ import { brl, CarCard } from "./components/car-card";
 import { FilterBar } from "./components/filter-bar";
 import { SearchBar } from "./components/search-bar";
 import { interpret, needsAI } from "@/lib/ai";
-import { cars } from "@/lib/cars";
+import { CATEGORY_LABELS, cars } from "@/lib/cars";
 import { first, readFilters } from "@/lib/parse";
 import { rank, type Match } from "@/lib/rank";
 
@@ -48,6 +48,11 @@ export default async function Home({ searchParams }: PageProps<"/">) {
   const searched = Object.keys(filters).length > 0;
   const show = { budget: filters.maxPrice !== undefined, city: filters.city !== undefined };
   const main = requested[0] && headline(requested[0]);
+  // Se a pessoa escolheu uma categoria diferente da do carro que buscou, os parecidos seguem a escolha dela.
+  const chosenCategory =
+    requested[0] && filters.category && filters.category !== requested[0].car.Category
+      ? CATEGORY_LABELS[filters.category]
+      : undefined;
 
   return (
     <>
@@ -90,7 +95,7 @@ export default async function Home({ searchParams }: PageProps<"/">) {
             <p className="mt-2 text-muted">{main.detail}</p>
             <div className="mt-6 grid gap-4">
               {requested.map((match, index) => (
-                <CarCard key={match.car.Model} match={match} index={index} {...show} alternative={false} wide />
+                <CarCard key={match.car.Model} match={match} index={index} {...show} wide />
               ))}
             </div>
           </section>
@@ -98,7 +103,13 @@ export default async function Home({ searchParams }: PageProps<"/">) {
 
         <section className="pt-12" aria-labelledby="alternatives">
           <h2 id="alternatives" className="text-xs font-medium uppercase tracking-wider text-muted">
-            {main ? `Parecidos com o ${requested[0].car.Model}` : searched ? "Os melhores para a sua busca" : "Todos os carros"}
+            {chosenCategory
+              ? `Opções na categoria ${chosenCategory}`
+              : main
+                ? `Parecidos com o ${requested[0].car.Model}`
+                : searched
+                  ? "Os melhores para a sua busca"
+                  : "Todos os carros"}
           </h2>
           {query && !searched && (
             <p className="mt-2 text-muted">
@@ -107,7 +118,13 @@ export default async function Home({ searchParams }: PageProps<"/">) {
           )}
           <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {alternatives.map((match, index) => (
-              <CarCard key={match.car.Model} match={match} index={index} {...show} alternative={Boolean(main)} />
+              <CarCard
+                key={match.car.Model}
+                match={match}
+                index={index}
+                {...show}
+                categoryTag={chosenCategory ? "Categoria escolhida" : main ? "Mesma categoria" : undefined}
+              />
             ))}
           </div>
         </section>
