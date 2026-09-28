@@ -224,12 +224,15 @@ Esta seção é o diário do projeto. Cada etapa entra aqui quando termina, com 
 
 A arquitetura acima foi escrita antes de qualquer código, para que cada etapa seguinte tenha um critério claro de pronto.
 
+### 2026-09-28: Scaffold
+
+O projeto foi criado com Next.js 16, TypeScript, Tailwind 4 e ESLint, usando o App Router. O conteúdo de exemplo do template saiu, a página ficou em português e com título e descrição do produto. Lint e build passam sem erros.
+
 ### Próximas Etapas
 
-1. Scaffold do Next.js
-2. Enriquecer o `cars.json` e trocar as imagens
-3. Parser e ordenação, com os três casos de teste cobertos por testes
-4. Interface: busca, filtros, cards com o botão de simulação e carregamento, responsiva
-5. Integração com a IA e sugestões clicáveis
-6. Deploy na Vercel
-7. README final com o link do deploy, decisões e Plano de Negócios
+1. Enriquecer o `cars.json` e trocar as imagens
+2. Parser e ordenação, com os três casos de teste cobertos por testes
+3. Interface: busca, filtros, cards com o botão de simulação e carregamento, responsiva
+4. Integração com a IA e sugestões clicáveis
+5. Deploy na Vercel
+6. README final com o link do deploy, decisões e Plano de Negócios
