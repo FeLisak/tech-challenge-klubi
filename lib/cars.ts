@@ -11,3 +11,5 @@ export type Car = {
 };
 
 export const cars: Car[] = data;
+
+export const CATEGORY_LABELS: Record<string, string> = { hatch: "Hatch", sedan: "Sedã", suv: "SUV" };

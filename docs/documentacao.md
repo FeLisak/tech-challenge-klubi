@@ -194,12 +194,12 @@ Algumas ideias trariam resultado para o negócio, mas dependem de coisas que um 
 
 | Requisito do desafio | Onde é atendido | Status |
 |---|---|---|
-| Buscar e visualizar carros de forma intuitiva | A Busca, A Tela | ⏳ |
+| Buscar e visualizar carros de forma intuitiva | A Busca, A Tela | ✅ |
 | Usar o JSON fornecido | A Base | ✅ |
 | Atualizar as imagens | A Base, Créditos das Imagens | ✅ |
-| Caso 1: o carro existe | Os Três Casos de Teste | ⏳ |
-| Caso 2: valor abaixo do disponível | Os Três Casos de Teste | ⏳ |
-| Caso 3: outra localidade | Os Três Casos de Teste | ⏳ |
+| Caso 1: o carro existe | Os Três Casos de Teste | ✅ |
+| Caso 2: valor abaixo do disponível | Os Três Casos de Teste | ✅ |
+| Caso 3: outra localidade | Os Três Casos de Teste | ✅ |
 | Diferencial: IA | A IA | ⏳ |
 | Diferencial: deploy na nuvem | Onde Roda | ⏳ |
 | Diferencial: design e usabilidade | A Tela, Detalhes Que Vendem o Carro | ⏳ |
@@ -258,9 +258,18 @@ Os testes cobrem também o que protege a conversão: nenhuma busca termina em li
 
 Eu costumo trabalhar com TDD, escrevendo o teste antes do código. Aqui não foi assim: com o prazo curto do desafio, os testes vieram junto com a implementação, e o esforço foi concentrado em cobrir os casos que decidem a avaliação em vez de cada detalhe do parser.
 
+### 2026-09-28: Interface
+
+A página ficou em um arquivo de rota e quatro componentes: a barra de busca, os filtros, o card do carro e um seletor que aplica o filtro assim que a pessoa escolhe. Busca e filtros são formulários GET, então tudo vive na URL: a busca pode ser compartilhada, o botão de voltar funciona e a página responde mesmo antes do JavaScript carregar.
+
+Os filtros já vêm preenchidos com o que o parser entendeu do texto, e o que a pessoa ajusta neles vence o texto. Os valores que chegam pela URL são conferidos contra a base antes de virar filtro, então um parâmetro inventado é simplesmente ignorado. Isso também ganhou teste.
+
+Cada caso de teste tem a sua mensagem no topo dos resultados, e o carro pedido aparece em destaque, com foto grande, mesmo quando não cabe no orçamento ou está em outra cidade. Os parecidos vêm logo abaixo, e cada card mostra em etiquetas por que está ali: mesma categoria, cabe no orçamento, na sua cidade ou quanto passa do orçamento. Todo card termina no botão de simular o consórcio. Abaixo da busca, exemplos clicáveis mostram o que dá para digitar, e o rodapé leva aos créditos das fotos.
+
+O visual segue uma linha monocromática e sóbria, com cor reservada para as etiquetas, porque num anúncio de carro quem precisa aparecer é o carro. A tela foi conferida no desktop e no celular.
+
 ### Próximas Etapas
 
-1. Interface: busca, filtros, cards com o botão de simulação e carregamento, responsiva
-2. Integração com a IA e sugestões clicáveis
-3. Deploy na Vercel
-4. README final com o link do deploy, decisões e Plano de Negócios
+1. Integração com a IA e sugestões clicáveis
+2. Deploy na Vercel
+3. README final com o link do deploy, decisões e Plano de Negócios

@@ -105,3 +105,35 @@ export function parseQuery(query: string, base: Car[]): Filters {
 
   return filters;
 }
+
+export type SearchParams = Record<string, string | string[] | undefined>;
+
+export const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value) ?? "";
+
+// O texto livre dá o ponto de partida; o que a pessoa ajusta nos filtros vence o texto.
+// Um filtro presente e vazio ("qualquer cidade") também vence: é uma escolha explícita.
+export function readFilters(params: SearchParams, base: Car[]): Filters {
+  const filters = parseQuery(first(params.q), base);
+  const known = (key: string, values: string[]) => {
+    const value = first(params[key]);
+    return values.includes(value) ? value : undefined;
+  };
+
+  if ("modelo" in params) {
+    delete filters.brand;
+    filters.model = known("modelo", base.map((car) => car.Model));
+  }
+  if ("cidade" in params) filters.city = known("cidade", base.map((car) => car.Location));
+  if ("categoria" in params) filters.category = known("categoria", base.map((car) => car.Category));
+  if ("max" in params) {
+    const max = Number(first(params.max));
+    const valid = max > 0 && max < 10_000_000;
+    filters.maxPrice = valid ? max : undefined;
+    filters.approx = valid ? false : undefined;
+  }
+
+  for (const key of Object.keys(filters) as (keyof Filters)[]) {
+    if (filters[key] === undefined) delete filters[key];
+  }
+  return filters;
+}

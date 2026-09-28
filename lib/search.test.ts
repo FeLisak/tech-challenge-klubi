@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import type { Car } from "./cars.ts";
-import { parseQuery } from "./parse.ts";
+import { parseQuery, readFilters } from "./parse.ts";
 import { rank } from "./rank.ts";
 
 const cars: Car[] = JSON.parse(readFileSync(new URL("../data/cars.json", import.meta.url), "utf8"));
@@ -59,4 +59,12 @@ test("busca sem modelo ordena pelo que foi pedido", () => {
   const { requested, alternatives } = search("SUV em SP até 100 mil");
   assert.equal(requested.length, 0);
   assert.equal(alternatives[0].car.Model, "Pulse");
+});
+
+test("filtros ajustados vencem o texto, e valores desconhecidos são ignorados", () => {
+  assert.deepEqual(readFilters({ q: "Dolphin em SP até 80 mil", cidade: "", max: "100000" }, cars), {
+    model: "Dolphin", maxPrice: 100000, approx: false,
+  });
+  assert.deepEqual(readFilters({ q: "jeep", modelo: "Corolla" }, cars), { model: "Corolla" });
+  assert.deepEqual(readFilters({ modelo: "Tesla", cidade: "<script>", max: "-1" }, cars), {});
 });
